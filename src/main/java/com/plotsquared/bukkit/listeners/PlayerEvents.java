@@ -61,9 +61,7 @@ import org.bukkit.event.entity.PotionSplashEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.hanging.HangingBreakByEntityEvent;
 import org.bukkit.event.hanging.HangingPlaceEvent;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.event.inventory.InventoryPickupItemEvent;
+import org.bukkit.event.inventory.*;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerBucketEmptyEvent;
 import org.bukkit.event.player.PlayerBucketFillEvent;
@@ -80,6 +78,8 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.vehicle.VehicleCreateEvent;
 import org.bukkit.event.vehicle.VehicleDestroyEvent;
+import org.bukkit.event.vehicle.VehicleEntityCollisionEvent;
+import org.bukkit.event.vehicle.VehicleMoveEvent;
 import org.bukkit.event.world.ChunkLoadEvent;
 import org.bukkit.event.world.StructureGrowEvent;
 import org.bukkit.help.HelpTopic;
@@ -132,6 +132,8 @@ import com.plotsquared.bukkit.util.BukkitUtil;
 public class PlayerEvents extends com.plotsquared.listener.PlotListener implements Listener {
 
     private boolean pistonBlocks = true;
+    private final List<InventoryType> unmodifiableInventories = Arrays.asList(InventoryType.CHEST, InventoryType.BREWING, InventoryType.DISPENSER, InventoryType.DROPPER, InventoryType.FURNACE, InventoryType.HOPPER);
+
 
     public static void sendBlockChange(final org.bukkit.Location bloc, final Material type, final byte data) {
         TaskManager.runTaskLater(new Runnable() {
@@ -272,6 +274,45 @@ public class PlayerEvents extends com.plotsquared.listener.PlotListener implemen
         }
     }
     
+    @EventHandler
+    public void onVehicleMove(VehicleEntityCollisionEvent event) {
+        if(event.getEntity() instanceof Player){
+            PlotPlayer pp = BukkitUtil.getPlayer((Player) event.getEntity());
+            Location loc = BukkitUtil.getLocation(event.getVehicle().getLocation().clone());
+            Plot plot = MainUtil.getPlot(loc);
+            if (plot == null) {
+                return;
+            }
+            if (plot.isAdded(pp.getUUID())) {
+                return;
+            }
+            if (Permissions.hasPermission(pp, C.PERMISSION_ADMIN_INTERACT_OTHER)) {
+                return;
+            }
+            event.setCollisionCancelled(true);
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void onEditContainer(InventoryClickEvent event) {
+        if(unmodifiableInventories.contains(event.getInventory().getType())) {
+            PlotPlayer pp = BukkitUtil.getPlayer((Player) event.getWhoClicked());
+            Location loc = BukkitUtil.getLocation(event.getWhoClicked().getLocation());
+            Plot plot = MainUtil.getPlot(loc);
+            if (plot == null) {
+                return;
+            }
+            if (plot.isAdded(pp.getUUID())) {
+                return;
+            }
+            if (Permissions.hasPermission(pp, C.PERMISSION_ADMIN_INTERACT_OTHER)) {
+                return;
+            }
+            event.setCancelled(true);
+        }
+    }
+
     @EventHandler
     public void onProjectileHit(ProjectileHitEvent event) {
         Projectile entity = event.getEntity();

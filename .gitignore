@@ -6,3 +6,5 @@
 *.classpath
 /.idea
 /resources
+target/PlotSquared-Bukkit.jar
+target/PlotSquared-Sponge.jar
