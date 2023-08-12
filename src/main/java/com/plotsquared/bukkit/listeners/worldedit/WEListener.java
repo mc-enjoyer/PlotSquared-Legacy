@@ -121,6 +121,12 @@ public class WEListener implements Listener {
             else if (!WEManager.maskContains(mask, pos2.getBlockX(), pos2.getBlockY(), pos2.getBlockZ())) {
                 arg = "pos2";
             }
+            else if (pos1.getBlockY() == 0) {
+                arg = "pos1";
+            }
+            else if (pos2.getBlockY() == 0) {
+                arg = "pos2";
+            }
             if (arg != null) {
                 e.setCancelled(true);
                 MainUtil.sendMessage(pp, C.REQUIRE_SELECTION_IN_MASK, arg);
