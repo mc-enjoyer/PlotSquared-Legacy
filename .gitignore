@@ -1,9 +1,8 @@
 *.bat
 *.prefs
 *.class
-/target/classes
-/target/PlotSquared-Null.jar
-/target/PlotSquared-Uber.jar
-/target/maven-archiver
+/target
 *.project
 *.classpath
+/.idea
+/resources
