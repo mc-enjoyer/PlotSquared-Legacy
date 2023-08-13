@@ -79,7 +79,6 @@ import com.plotsquared.bukkit.util.BukkitSetBlockManager;
 import com.plotsquared.bukkit.util.BukkitSetupUtils;
 import com.plotsquared.bukkit.util.BukkitTaskManager;
 import com.plotsquared.bukkit.util.BukkitUtil;
-import com.plotsquared.bukkit.util.Metrics;
 import com.plotsquared.bukkit.util.SendChunk;
 import com.plotsquared.bukkit.util.SetBlockFast;
 import com.plotsquared.bukkit.util.SetBlockFast_1_8;
@@ -542,17 +541,6 @@ public class BukkitMain extends JavaPlugin implements Listener, IPlotMain {
     @Override
     public String getServerName() {
         return Bukkit.getServerName();
-    }
-
-    @Override
-    public void startMetrics() {
-        try {
-            final Metrics metrics = new Metrics(this);
-            metrics.start();
-            log(C.PREFIX.s() + "&6Metrics enabled.");
-        } catch (final Exception e) {
-            log(C.PREFIX.s() + "&cFailed to load up metrics.");
-        }
     }
 
     @Override

@@ -135,10 +135,6 @@ public class Settings {
      */
     public static boolean WORLDGUARD = false;
     /**
-     * metrics
-     */
-    public static boolean METRICS = true;
-    /**
      * plot specific resource pack
      */
     public static String PLOT_SPECIFIC_RESOURCE_PACK = "";

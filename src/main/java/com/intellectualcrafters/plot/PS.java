@@ -175,12 +175,6 @@ public class PS {
             IMP.registerPlotPlusEvents();
             IMP.registerForceFieldEvents();
             IMP.registerWorldEvents();
-            if (Settings.METRICS) {
-                IMP.startMetrics();
-            } else {
-                log("&dUsing metrics will allow us to improve the plugin, please consider it :)");
-            }
-            IMP.startMetrics();
             if (Settings.TNT_LISTENER) {
                 IMP.registerTNTListener();
             }
@@ -1881,7 +1875,6 @@ public class PS {
         // Misc
         options.put("console.color", Settings.CONSOLE_COLOR);
         options.put("chat.fancy", Settings.FANCY_CHAT);
-        options.put("metrics", true);
         options.put("debug", true);
         options.put("update-notifications", true);
         
@@ -2009,7 +2002,6 @@ public class PS {
         if (!config.getBoolean("chat.fancy") || !checkVersion(IMP.getServerVersion(), 1, 8, 0)) {
             Settings.FANCY_CHAT = false;
         }
-        Settings.METRICS = config.getBoolean("metrics");
     }
 
 
@@ -2103,7 +2095,6 @@ public class PS {
         Settings.DB.USE_SQLITE = storage.getBoolean("sqlite.use");
         Settings.DB.SQLITE_DB = storage.getString("sqlite.db");
         Settings.DB.PREFIX = storage.getString("prefix");
-        Settings.METRICS = config.getBoolean("metrics");
         Settings.AUTO_CLEAR = config.getBoolean("clear.auto.enabled");
         Settings.AUTO_CLEAR_DAYS = config.getInt("clear.auto.days");
         Settings.DELETE_PLOTS_ON_BAN = config.getBoolean("clear.on.ban");
@@ -2117,7 +2108,6 @@ public class PS {
         if (Settings.DEBUG) {
             final Map<String, String> settings = new HashMap<>();
             settings.put("Kill Road Mobs", "" + Settings.KILL_ROAD_MOBS);
-            settings.put("Use Metrics", "" + Settings.METRICS);
             settings.put("Delete Plots On Ban", "" + Settings.DELETE_PLOTS_ON_BAN);
             settings.put("Mob Pathfinding", "" + Settings.MOB_PATHFINDING);
             settings.put("DB Mysql Enabled", "" + Settings.DB.USE_MYSQL);

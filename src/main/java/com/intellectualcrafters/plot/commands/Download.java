@@ -28,11 +28,6 @@ public class Download extends SubCommand {
 
     @Override
     public boolean onCommand(final PlotPlayer plr, final String[] args) {
-        
-        if (!Settings.METRICS) {
-            MainUtil.sendMessage(plr, "&cPlease enable metrics in order to use this command.\n&7 - Or host it yourself if you don't like the free service");
-            return false;
-        }
         final String world = plr.getLocation().getWorld();
         if (!PS.get().isPlotWorld(world)) {
             return !sendMessage(plr, C.NOT_IN_PLOT_WORLD);

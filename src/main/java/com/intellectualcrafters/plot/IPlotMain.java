@@ -158,11 +158,6 @@ public interface IPlotMain {
     HybridUtils initHybridUtils();
     
     /**
-     * Start the metrics task
-     */
-    void startMetrics();
-    
-    /**
      * If a world is already loaded, set the generator (use NMS if required)
      * @param world
      */
